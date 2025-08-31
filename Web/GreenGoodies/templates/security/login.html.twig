@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+{% endblock %}
+
+{% block body %}
+	<div class="auth-wrapper">
+		<div class="register-hero" style="background-image:url('{{ asset('images/login.jpg') }}');"></div>
+
+		<div class="auth-panel">
+			<div class="panel-inner">
+				<h1>Connexion</h1>
+
+				{% if error %}
+					<div class="alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+
+				<form method="post" action="{{ path('app_login') }}" novalidate>
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+
+					<div class="form-field">
+						<label for="inputEmail">Adresse email</label>
+						<input type="email" id="inputEmail" name="_username" value="{{ last_username }}" required autocomplete="email" autofocus>
+					</div>
+
+					<div class="form-field">
+						<label for="inputPassword">Mot de passe</label>
+						<input type="password" id="inputPassword" name="_password" required autocomplete="current-password">
+					</div>
+
+					<button class="btn-primary" type="submit">Se connecter</button>
+				</form>
+
+				<p class="alt-link">
+					Pas encore de compte ?
+					<a href="{{ path('app_register') }}">S’inscrire</a>
+				</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

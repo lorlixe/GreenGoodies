@@ -1,19 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription
+{% endblock %}
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+	<div class="register-wrapper">
+		<div class="register-hero" style="background-image:url('{{ asset('images/register.jpg') }}');"></div>
 
-    {{ form_errors(registrationForm) }}
+		<div class="register-panel">
+			<div class="panel-inner">
+				<h1>Inscription</h1>
+				<p class="subtitle">Tous les champs sont obligatoires.</p>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+				{{ form_start(registrationForm, {attr: {novalidate: 'novalidate'}}) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+				{{ form_row(registrationForm.lastName) }}
+				{{ form_row(registrationForm.firstName) }}
+				{{ form_row(registrationForm.email) }}
+				{{ form_row(registrationForm.plainPassword.first) }}
+				{{ form_row(registrationForm.plainPassword.second) }}
+				<div class="checkbox-row">
+					{{ form_widget(registrationForm.cguAccepted) }}
+					<label for="{{ registrationForm.cguAccepted.vars.id }}">{{ registrationForm.cguAccepted.vars.label|default("J'accepte les CGU de GreenGoodies") }}</label>
+					{{ form_errors(registrationForm.cguAccepted) }}
+				</div>
+
+				<button class="btn-primary" type="submit">S'inscrire</button>
+
+				{{ form_end(registrationForm) }}
+
+				<p class="alt-link">
+					Déjà un compte ?
+					<a href="{{ path('app_login') }}">Se connecter</a>
+				</p>
+			</div>
+		</div>
+	</div>
 {% endblock %}
