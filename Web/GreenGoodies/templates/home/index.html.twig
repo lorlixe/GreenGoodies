@@ -3,7 +3,7 @@
 {% block title %}Accueil • Green Goodies
 {% endblock %}
 {% block page_styles %}
-	<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/home.css') }}?v={{ date().timestamp }}">
 {% endblock %}
 
 
@@ -13,8 +13,7 @@
 			<div class="hero-box">
 				<h1>Bienvenue</h1>
 				<p>Découvrez notre univers de produits durables et éthiques pour une consommation responsable</p>
-				<p>Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt 
-																																																																																																				à porter</p>
+				<p>Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt à porter</p>
 			</div>
 		</div>
 
@@ -28,7 +27,7 @@
 			<div class="product-grid">
 				{% for p in products|slice(0, 9) %}
 					<article class="product-card">
-						<a class="product-cover" href="" style="background-image:url('{{ asset(p.image) }}')"></a>
+						<a class="product-cover" href="{{ path('app_product_show', { id: p.id }) }}" style="background-image:url('{{ asset(p.image) }}')"></a>
 						<div class="product-meta">
 							<h3 class="product-title">
 								<a href="">{{ p.name }}</a>
@@ -37,7 +36,8 @@
 							<div class="product-foot">
 								<span class="product-price">{{ (p.price ?? 0)|number_format(2, ',', ' ') }}
 									€</span>
-								{# <a class="product-link" href="{{ path('products_show', { id: p.id }) }}">Voir le produit</a> #}
+								<a class="product-link" href="{{ path('app_product_show', { id: p.id }) }}">Voir le produit</a>
+
 							</div>
 						</div>
 					</article>
@@ -47,4 +47,39 @@
 			<p class="empty">Pas encore de produits à afficher.</p>
 		{% endif %}
 	</section>
+
+	<section
+		class="about-grid">
+		{# Haut gauche : bloc beige avec texte #}
+		<div class="tile tile--beige">
+			<div class="tile-inner align-bl">
+				<h3>Notre conviction</h3>
+				<p>Chez GreenGoodies, nous croyons en un monde où le commerce peut être synonyme de bien-être pour la planète et ses habitants.</p>
+				<p>Notre mission est de vous proposer une sélection rigoureuse de produits qui allient qualité, durabilité et éthique.</p>
+			</div>
+		</div>
+
+		{# Haut droite : image branche #}
+		<div class="tile tile--img" style="background-image:url('{{ asset('images/login.jpg') }}');"></div>
+
+		{# Bas gauche : image sacs verts #}
+		<div class="tile tile--img" style="background-image:url('{{ asset('images/valeur.jpg') }}');"></div>
+
+		{# Bas droite : bloc vert avec texte #}
+		<div class="tile tile--mint">
+			<div class="tile-inner align-br">
+				<h3>Nos valeurs</h3>
+				<p>
+					<strong>Durabilité :</strong>
+					Nous sélectionnons soigneusement des produits qui respectent l’environnement et favorisent la durabilité.</p>
+				<p>
+					<strong>Éthique :</strong>
+					Nous travaillons avec des partenaires et des fournisseurs qui partagent nos valeurs.</p>
+				<p>
+					<strong>Écologie :</strong>
+					Nous privilégions les pratiques respectueuses des écosystèmes et des matériaux écologiques.</p>
+			</div>
+		</div>
+	</section>
+
 {% endblock %}

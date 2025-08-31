@@ -7,6 +7,9 @@
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 			{% block page_styles %}{% endblock %}
 		{% endblock %}
@@ -22,12 +25,12 @@
 	<body>
 		<header class="gg-navbar">
 			<div class="gg-container">
-				<a class="gg-brand" href="">
+				<a class="gg-brand" href="{{ path('app_home') }}">
 					<img src="{{ asset('images/Logogreen.png') }}" alt="Green Goodies" class="gg-logo">
 				</a>
 
 				<nav class="gg-nav">
-					<a href="">Nos produits</a>
+					<a href="{{ path('app_product') }}">Nos produits</a>
 					<a href="">Mon panier</a>
 
 					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

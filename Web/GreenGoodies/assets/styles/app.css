@@ -7,6 +7,13 @@
     --gg-logo-bg: #4d7f62; /* vert logo */
     --gg-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
+body {
+    margin: 0;
+}
+html {
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial,
+        "Helvetica Neue", sans-serif;
+}
 
 /* Barre */
 .gg-navbar {

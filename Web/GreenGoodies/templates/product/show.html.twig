@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ product.name }}
+	• Green Goodies
+{% endblock %}
+
+{% block page_styles %}
+	<link rel="stylesheet" href="{{ asset('css/product.css') }}">
+{% endblock %}
+
+{% block body %}
+	<section class="product-view">
+		<div class="product-media">
+			<img src="{{ asset(product.image) }}" alt="{{ product.name }}" loading="eager">
+
+		</div>
+
+		<div class="product-details">
+			<h1 class="product-title">{{ product.name }}</h1>
+			<div class="product-price">{{ (product.price ?? 0)|number_format(2, ',', ' ') }}€</div>
+
+			<h2 class="section-label">Description</h2>
+			<div class="product-desc">
+				{{ product.longDescription|default('')|nl2br }}
+			</div>
+
+			{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+				{# <form method="post" action="{{ path('cart_add', { id: product.id }) }}" class="product-buy">
+																														      <button type="submit" class="btn-primary">Ajouter au panier</button>
+																														    </form> #}
+				{% else %}
+			{% endif %}
+
+
+		</div>
+	</section>
+
+{% endblock %}

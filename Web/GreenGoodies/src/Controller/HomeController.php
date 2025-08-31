@@ -13,7 +13,7 @@ class HomeController extends AbstractController
     public function index(ProductRepository $products): Response
     {
         // on affiche 8 produits max (adapte comme tu veux)
-        $best = $products->findBy([], null, 8);
+        $best = $products->findBy([], null, 9);
 
         return $this->render('home/index.html.twig', [
             'products' => $best,

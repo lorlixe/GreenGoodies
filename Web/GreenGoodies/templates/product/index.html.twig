@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block page_styles %}
+	<link rel="stylesheet" href="{{ asset('css/home.css') }}?v={{ date().timestamp }}">
+{% endblock %}
+{% block title %}Product index
+{% endblock %}
+
+{% block body %}
+
+	<section class="home-products">
+		<h2>Nos produits</h2>
+
+		{% if products is defined and products|length > 0 %}
+			<div class="product-grid">
+				{% for p in products|slice(0, 9) %}
+					<article class="product-card">
+						<a class="product-cover" href="{{ path('app_product_show', { id: p.id }) }}" style="background-image:url('{{ asset(p.image) }}')"></a>
+						<div class="product-meta">
+							<h3 class="product-title">
+								<a href="">{{ p.name }}</a>
+							</h3>
+							<p class="product-desc">{{ p.shortDescription }}</p>
+							<div class="product-foot">
+								<span class="product-price">{{ (p.price ?? 0)|number_format(2, ',', ' ') }}
+									€</span>
+								<a class="product-link" href="{{ path('app_product_show', { id: p.id }) }}">Voir le produit</a>
+
+							</div>
+						</div>
+					</article>
+				{% endfor %}
+			</div>
+		{% else %}
+			<p class="empty">Pas encore de produits à afficher.</p>
+		{% endif %}
+	</section>
+{% endblock %}
