@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon panier
+{% endblock %}
+
+{% block page_styles %}
+	<link rel="stylesheet" href="{{ asset('css/cart.css') }}">
+{% endblock %}
+
+{% block body %}
+	<section class="cart-wrap">
+		<div class="cart-container">
+
+			<div class="cart-head">
+				{% if items|length > 0 %}
+
+					<form method="post" action="{{ path('app_cart_clear') }}" onsubmit="return confirm('Vider le panier ?')" class="cart-clear">
+						<input type="hidden" name="_token" value="{{ path('app_cart_clear') }}">
+						<button type="submit" class="as-link">× Vider le panier</button>
+					</form>
+				{% endif %}
+				<h1>Mon panier</h1>
+			</div>
+
+			<div class="cart-card">
+				{% if items|length == 0 %}
+					<div class="cart-empty">
+						<p>Votre panier est vide.</p>
+						<a class="btn-primary" href="{{ path('app_product') }}">Voir nos produits</a>
+					</div>
+				{% else %}
+
+					{# Lignes du panier #}
+					{% for item in items %}
+						<div class="cart-line">
+							<div class="line-media">
+								<img src="{{ asset(item.product.image) }}" alt="{{ item.product.name }}" loading="eager">
+							</div>
+
+							<div class="line-info">
+								<div class="line-title">{{ item.product.name }}</div>
+								<div class="line-qty">Quantité :
+									{{ item.quantity }}</div>
+								<div class="line-price">{{ item.unit_price|number_format(2, ',', ' ') }}€</div>
+							</div>
+						</div>
+					{% endfor %}
+
+					{# Résumé #}
+					<div class="cart-summary">
+						<div class="sum-row">
+							<span>Total panier :</span>
+							<strong>{{ sub_total|number_format(2, ',', ' ') }}€</strong>
+						</div>
+						<div class="sum-sub">Frais de livraison : Offert</div>
+					</div>
+				{% endif %}
+			</div>
+
+			{% if items|length > 0 %}
+
+				<div class="cart-cta">
+					<form method="post" action="{{ path('orders_confirm') }}" style="margin-top:22px;display:flex;justify-content:center;">
+						<button class="btn-primary">Valider la commande</button>
+					</form>
+
+				</div>
+			{% endif %}
+
+		</div>
+	</section>
+{% endblock %}

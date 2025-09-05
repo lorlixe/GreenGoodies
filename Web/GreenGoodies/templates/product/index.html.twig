@@ -9,7 +9,6 @@
 
 	<section class="home-products">
 		<h2>Nos produits</h2>
-
 		{% if products is defined and products|length > 0 %}
 			<div class="product-grid">
 				{% for p in products|slice(0, 9) %}

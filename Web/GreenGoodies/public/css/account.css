@@ -1,0 +1,112 @@
+:root {
+    --gg-bg-cream: #f4efeb; /* fond de page crème */
+    --gg-card: #fbf8f4; /* fond des cartes */
+    --gg-border: #e6e1dc; /* bordures fines */
+    --gg-text: #2e2e2e;
+    --gg-muted: #6b6b6b;
+    --gg-btn: #5a5a5a; /* bouton sombre */
+}
+
+/* Page */
+.account-wrap {
+    background: var(--gg-bg-cream);
+    padding: 28px 0 64px;
+}
+.account-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.page-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 18px;
+}
+
+/* Carte générique */
+.card {
+    background: var(--gg-card);
+    border: 1px solid var(--gg-border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+.card-head {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 14px 16px 8px;
+}
+.card-empty {
+    padding: 18px 16px 22px;
+    color: var(--gg-muted);
+    font-size: 13px;
+}
+.card-actions {
+    padding: 18px 16px 22px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Tableau des commandes (style léger) */
+.orders-table {
+    padding: 0 16px 12px;
+}
+.orders-table .row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* N° | Date | Prix */
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    text-decoration: none;
+    color: inherit;
+}
+.orders-table .row.head {
+    border-bottom: 1px solid var(--gg-border);
+    padding-top: 0;
+    padding-bottom: 8px;
+    font-size: 12px;
+    color: var(--gg-muted);
+}
+.orders-table .row.body {
+    border-bottom: 1px solid var(--gg-border);
+}
+.orders-table .row.body:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+.orders-table .col.price {
+    text-align: right;
+}
+
+/* Boutons */
+.btn-primary {
+    min-width: 340px;
+    max-width: 100%;
+    height: 44px;
+    border: none;
+    border-radius: 2px;
+    background: var(--gg-btn);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.btn-primary:hover {
+    filter: brightness(0.96);
+}
+.btn-primary.danger {
+    background: #444;
+}
+
+/* Responsive */
+@media (max-width: 560px) {
+    .orders-table .row {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .btn-primary {
+        min-width: 100%;
+    }
+}

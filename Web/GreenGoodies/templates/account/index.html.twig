@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon compte
+{% endblock %}
+
+{% block page_styles %}
+	<link rel="stylesheet" href="{{ asset('css/account.css') }}">
+{% endblock %}
+
+{% block body %}
+	<section class="account-wrap">
+		<div class="account-container">
+
+			<h1 class="page-title">Mon compte</h1>
+
+			{# --- Carte : Mes commandes --- #}
+			<section class="card">
+				<header class="card-head">Mes commandes</header>
+
+				{% if orders is empty %}
+					<div class="card-empty">Aucune commande pour le moment.</div>
+				{% else %}
+					<div class="orders-table">
+						<div class="row head">
+							<div class="col number">N°</div>
+							<div class="col date">Date</div>
+							<div class="col price">Prix</div>
+						</div>
+						{% for order in orders %}
+							<a class="row body">
+								<div class=" col number">{{ '%02d'|format(order.id) }}</div>
+								<div class="col date">{{ order.date|date('d/m/Y') }}</div>
+								<div class="col price">{{ (order.total ?? 0)|number_format(2, ',', ' ') }}€</div>
+							</a>
+						{% endfor %}
+					</div>
+				{% endif %}
+			</section>
+
+			{# --- Carte : Mon accès API --- #}
+			<section class="card">
+				<header class="card-head">Mon accès API</header>
+				<div class="card-actions">
+					<form method="post" action="">
+						<input type="hidden" name="_token" value="">
+						<button class="btn-primary" type="submit">Activer mon accès API</button>
+					</form>
+				</div>
+			</section>
+
+			{# --- Carte : Supprimer mon compte --- #}
+			<section class="card">
+				<div class="card-actions">
+					<form method="post" action="" onsubmit="return confirm('Supprimer votre compte ? Cette action est irréversible.');">
+						<input type="hidden" name="_token" value="">
+						<button class="btn-primary danger" type="submit">Supprimer mon compte</button>
+					</form>
+				</div>
+			</section>
+
+		</div>
+	</section>
+{% endblock %}

@@ -31,10 +31,10 @@
 
 				<nav class="gg-nav">
 					<a href="{{ path('app_product') }}">Nos produits</a>
-					<a href="">Mon panier</a>
 
 					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-						<a href="">Mon compte</a>
+						<a href="{{ path('app_cart_index') }}">Mon panier</a>
+						<a href="{{ path('orders_show') }}">Mon compte</a>
 						<a href="{{ path('app_logout') }}">Déconnexion</a>
 					{% else %}
 						<a href="{{ path('app_login') }}">Connexion</a>
