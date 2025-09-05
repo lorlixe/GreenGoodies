@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Repository\CartRepository;
+use App\Repository\OrderRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -31,5 +37,44 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    #[Route(path: '/delete', name: 'app_user_delete')]
+    public function delete(
+        Request $request,
+        EntityManagerInterface $em,
+        CartRepository $cartRepo,
+        OrderRepository $orderRepo,
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session
+    ): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        /** @var User $user */
+        $user = $this->getUser();
+        if (!$this->isCsrfTokenValid('account_delete', (string) $request->request->get('_token'))) {
+        }
+        // 1) Supprimer les lignes de panier
+        foreach ($cartRepo->findBy(['user_id' => $user]) as $row) {
+            $em->remove($row);
+        }
+        // 2) Supprimer les commandes
+        foreach ($orderRepo->findBy(['user_id' => $user]) as $order) {
+            foreach ($order->getOrderProducts() as $op) {
+                $em->remove($op);
+            }
+            $em->remove($order);
+        }
+
+        // 3) Supprimer l'utilisateur
+        $em->remove($user);
+        $em->flush();
+
+        // --- Déconnexion propre ---
+        $tokenStorage->setToken(null); // enlève l'authentification
+        $session->invalidate();        // détruit la session
+
+        $this->addFlash('success', 'Votre compte a bien été supprimé.');
+        return $this->redirectToRoute('app_home');
     }
 }

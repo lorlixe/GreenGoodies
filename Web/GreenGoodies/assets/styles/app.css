@@ -6,6 +6,7 @@
     --gg-link: #4a4a4a;
     --gg-logo-bg: #4d7f62; /* vert logo */
     --gg-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    --brand-green: #4d7f62; /* vert principal */
 }
 body {
     margin: 0;
@@ -62,6 +63,38 @@ html {
 /* Formulaire logout inline */
 .gg-logout-form {
     display: inline;
+}
+
+/* Conteneur marque */
+.gg-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+/* Carré avec le G */
+.gg-logo {
+    display: inline-grid;
+    place-items: center;
+    width: 28px; /* ajuste la taille si besoin */
+    height: 28px;
+    background: var(--brand-green);
+    color: #fff;
+    border-radius: 6px; /* coins arrondis */
+    font-weight: 500;
+    font-size: 18px; /* taille du “G” */
+    line-height: 1;
+    font-family: "Playfair Display", serif;
+}
+
+/* Nom de la marque */
+.gg-name {
+    font-family: "Playfair Display", serif;
+    font-size: 22px; /* ajuste pour matcher ton header */
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    color: var(--brand-green);
 }
 
 /* Responsive */

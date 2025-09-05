@@ -15,21 +15,26 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['product', 'cart'])]
+    #[Groups(['product', 'cart', 'order'])]
     private ?int $id = null;
 
+    #[Groups(['product'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Groups(['product'])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $short_description = null;
 
+    #[Groups(['product'])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $long_description = null;
 
+    #[Groups(['product'])]
     #[ORM\Column]
     private ?float $price = null;
 
+    #[Groups(['product'])]
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
