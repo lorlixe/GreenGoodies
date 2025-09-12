@@ -40,10 +40,18 @@
 			<section class="card">
 				<header class="card-head">Mon accès API</header>
 				<div class="card-actions">
-					<form method="post" action="">
-						<input type="hidden" name="_token" value="">
-						<button class="btn-primary" type="submit">Activer mon accès API</button>
-					</form>
+					{% if user.isApiActive == true %}
+						<form method="post" action="{{ path('api_disable') }}">
+							<input type="hidden" name="_token" value="">
+							<button class="btn-primary" type="submit">Désactiver Accès API</button>
+						</form>
+					{% else %}
+						<form method="post" action="{{ path('api_enable') }}">
+							<input type="hidden" name="_token" value="">
+							<button class="btn-primary" type="submit">Activer mon accès API</button>
+						</form>
+					{% endif %}
+
 				</div>
 			</section>
 

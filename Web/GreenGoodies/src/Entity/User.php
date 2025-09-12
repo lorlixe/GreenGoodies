@@ -41,6 +41,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $cgu_accepted = null;
 
+    #[ORM\Column]
+    private ?bool $api_active = null;
+
+
     /**
      * @var Collection<int, Order>
      */
@@ -136,6 +140,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCguAccepted(bool $cgu_accepted): static
     {
         $this->cgu_accepted = $cgu_accepted;
+
+        return $this;
+    }
+
+    public function isApiActive(): ?bool
+    {
+        return $this->api_active;
+    }
+
+    public function setApiActive(bool $api_accepted): static
+    {
+        $this->api_active = $api_accepted;
 
         return $this;
     }

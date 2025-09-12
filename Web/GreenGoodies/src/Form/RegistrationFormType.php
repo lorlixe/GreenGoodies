@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,14 +28,17 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Nom',
                 'constraints' => [new NotBlank(['message' => 'Veuillez saisir votre nom.'])],
             ])
-            ->add('email')
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse email',
+                'constraints' => [new NotBlank(['message' => 'Veuillez saisir un email correct'])],
+            ])
             ->add('cguAccepted', CheckboxType::class, [
-                'label' => "J'accepte les CGU",
+                'label' => " J’accepte les CGU de GreenGoodies",
                 'mapped' => true,
                 'required' => true,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter les conditions',
                     ]),
                 ],
             ])

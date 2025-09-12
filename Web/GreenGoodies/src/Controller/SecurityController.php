@@ -21,10 +21,8 @@ class SecurityController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home'); // déjà authentifié → home
         }
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
@@ -76,5 +74,42 @@ class SecurityController extends AbstractController
 
         $this->addFlash('success', 'Votre compte a bien été supprimé.');
         return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/activeapi/enable', name: 'api_enable', methods: ['POST'])]
+    public function enableApi(EntityManagerInterface $em)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
+        if ($user->isApiActive()) {
+            $this->addFlash('info', 'Votre accès API est déjà actif.');
+        }
+
+        // Active le flag
+        $user->setApiActive(true);
+
+        $em->flush();
+
+        $this->addFlash('success', 'Accès API activé.');
+        return $this->redirectToRoute('orders_show');
+    }
+    #[Route('/activeapi/disable', name: 'api_disable', methods: ['POST'])]
+    public function disableApi(EntityManagerInterface $em)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
+        // Active le flag
+        $user->setApiActive(false);
+
+        $em->flush();
+
+        $this->addFlash('success', 'Accès API activé.');
+        return $this->redirectToRoute('orders_show');
     }
 }

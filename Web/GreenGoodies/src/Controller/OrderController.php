@@ -105,6 +105,8 @@ final class OrderController extends AbstractController
 
         return $this->render('account/index.html.twig', [
             'orders'     => $orders,
+            'user'  => $user,
+
         ]);
     }
 }

@@ -1,9 +1,7 @@
 security:
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
 
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         app_user_provider:
             entity:
@@ -14,42 +12,29 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        # firewall pour ton API / login JSON (JWT par ex.)
-        login:
-            pattern: ^/web/login
+        api:
+            pattern: ^/api
             stateless: true
-            json_login:
-                check_path: /web/login_check
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            provider: app_user_provider
+            jwt: ~ # (LexikJWT)
 
-            logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
-
-        # firewall principal (protège le reste de ton site / API)
+        #  Site web
         main:
+            provider: app_user_provider
+            lazy: true
             form_login:
-                # "app_login" is the name of the route created previously
                 login_path: app_login
                 check_path: app_login
                 default_target_path: app_home
                 enable_csrf: true
-            lazy: true
-            provider: app_user_provider
-
             logout:
                 path: app_logout
                 target: app_home
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/web/login, roles: PUBLIC_ACCESS }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        # Bloque le reste de l'API si pas authentifié via JWT +  si API non activée
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

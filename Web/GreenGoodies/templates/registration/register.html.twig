@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{# ✅ applique ce template comme form theme pour ce formulaire #}
+{% form_theme registrationForm _self %}
+
 {% block title %}Inscription
 {% endblock %}
 
-{% block stylesheets %}
-
+{% block page_styles %}
 	<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+{% endblock %}
+
+{% block form_errors %}
+	{% if errors|length > 0 %}
+		<div class="alert-error">
+			{% for error in errors %}
+				<div>{{ error.message }}</div>
+			{% endfor %}
+		</div>
+	{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -17,16 +29,22 @@
 				<h1>Inscription</h1>
 				<p class="subtitle">Tous les champs sont obligatoires.</p>
 
-				{{ form_start(registrationForm, {attr: {novalidate: 'novalidate'}}) }}
+				{{ form_start(registrationForm, { attr: { novalidate: 'novalidate' } }) }}
 
 				{{ form_row(registrationForm.lastName) }}
 				{{ form_row(registrationForm.firstName) }}
 				{{ form_row(registrationForm.email) }}
+
 				{{ form_row(registrationForm.plainPassword.first) }}
 				{{ form_row(registrationForm.plainPassword.second) }}
+				{# erreurs "globale" du RepeatedType (mots de passe différents) #}
+				{{ form_errors(registrationForm.plainPassword) }}
+
 				<div class="checkbox-row">
 					{{ form_widget(registrationForm.cguAccepted) }}
-					<label for="{{ registrationForm.cguAccepted.vars.id }}">{{ registrationForm.cguAccepted.vars.label|default("J'accepte les CGU de GreenGoodies") }}</label>
+					<label for="{{ registrationForm.cguAccepted.vars.id }}">
+						{{ registrationForm.cguAccepted.vars.label|default("J'accepte les CGU de GreenGoodies") }}
+					</label>
 					{{ form_errors(registrationForm.cguAccepted) }}
 				</div>
 
