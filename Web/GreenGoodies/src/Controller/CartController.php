@@ -43,6 +43,7 @@ final class CartController extends AbstractController
             $line  = $unit * $qty;
             $subTotal += $line;
 
+
             // Données prêtes à afficher côté Twig (cart/index.html.twig)
             $items[] = [
                 'id'         => $row->getId(),
@@ -78,14 +79,18 @@ final class CartController extends AbstractController
         $user = $this->getUser();
 
         // Récupère la quantité envoyée
-        $qty = max(1, (int) $request->request->get('quantity', 1));
+        $qty = max(0, (int) $request->request->get('quantity', 0));
 
         // Cherche une ligne existante (même user + même produit)
         $line = $cartRepo->findOneBy(['user_id' => $user, 'product_id' => $product]);
 
         if ($line) {
             // Ligne déjà présente → on ajoute la quantité
-            $line->setQuantity($line->getQuantity() + $qty);
+            if ($qty == 0) {
+                $em->remove($line);
+            } else {
+                $line->setQuantity($line->getQuantity() + $qty);
+            }
         } else {
             // Nouvelle ligne de panier
             $line = (new Cart())

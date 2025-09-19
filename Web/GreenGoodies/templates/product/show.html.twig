@@ -26,13 +26,30 @@
 			</div>
 
 			{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-				<form method="post" action="{{ path('app_cart_add', { id: product.id }) }}" class="product-buy">
-					<button type="submit" class="btn-primary">Ajouter au panier</button>
+
+
+				<form method="post" action="{{ path('app_cart_add', { id: product.id }) }}">
+					<div class="qty">
+						<button type="button" class="qty-btn" data-qty-minus>-</button>
+						<input type="number" name="quantity" value={{quantity ?? 0}} min="0" max="99" step="1" inputmode="numeric" pattern="\d*">
+						<button type="button" class="qty-btn" data-qty-plus>+</button>
+						{% if quantity !=   null %}
+							<button class="btn-primary">Mettre à jour</button>
+
+						{% else %}
+							<button class="btn-primary">Ajouter au panier</button>
+
+
+						{% endif %}
+
+
+					</div>
+
 				</form>
+
 			{% endif %}
 
 
 		</div>
 	</section>
-
 {% endblock %}

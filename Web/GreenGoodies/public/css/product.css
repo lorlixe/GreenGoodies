@@ -74,6 +74,22 @@
     filter: brightness(0.96);
 }
 
+.qty {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 6px;
+}
+.qty input {
+    width: 72px;
+    text-align: center;
+}
+.qty-btn {
+    width: 32px;
+    border: 1px solid #ddd;
+    background: #f7f7f7;
+    cursor: pointer;
+}
+
 /* Responsive */
 @media (max-width: 980px) {
     .product-view {

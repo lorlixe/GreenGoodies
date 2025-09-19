@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,10 +27,17 @@ final class ProductController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    public function show(Product $product, CartRepository $cartRepository): Response
     {
+
+        $cartItem = $cartRepository->findOneBy(['product_id' => $product]);
+
+        $quantity = $cartItem?->getQuantity() ?? 0;
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'quantity' => $quantity,
+
         ]);
     }
 }
