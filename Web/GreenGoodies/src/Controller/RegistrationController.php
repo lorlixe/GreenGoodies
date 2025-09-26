@@ -15,6 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * Inscription : affiche le formulaire, crée l’utilisateur (hash du mot de passe),
+     * connecte immédiatement l’utilisateur puis redirige vers l’accueil.
+     * Redirige vers l’accueil si déjà authentifié.
+     */
+
     #[Route('/register', name: 'app_register')]
     public function register(
         Request $request,

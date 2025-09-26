@@ -16,6 +16,16 @@ html {
         "Helvetica Neue", sans-serif;
 }
 
+/* Tous les liens sans soulignement */
+a {
+    text-decoration: none;
+}
+
+/* Mais ajouter un effet au survol */
+a:hover {
+    text-decoration: underline;
+}
+
 /* Barre */
 .gg-navbar {
     background: var(--gg-bg);

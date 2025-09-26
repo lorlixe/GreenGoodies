@@ -15,6 +15,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * Connexion : affiche le formulaire, redirige vers l’accueil si déjà connecté,
+     * et passe au template le dernier identifiant saisi + l’éventuelle erreur.
+     */
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -31,12 +35,24 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Déconnexion : route vide, gérée par le firewall (interceptée automatiquement).
+     */
+
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
+    /**
+     * Suppression du compte :
+     * - vérifie l’authentification (et le CSRF),
+     * - supprime les lignes de panier puis les commandes (et leurs produits),
+     * - supprime l’utilisateur, flush,
+     * - déconnecte (token null + invalidate session),
+     * - flash et redirection.
+     */
     #[Route(path: '/delete', name: 'app_user_delete')]
     public function delete(
         Request $request,
@@ -76,6 +92,10 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
+    /**
+     * Activation de l’accès API : nécessite d’être connecté, active le flag,
+     * enregistre (flush), affiche un message et redirige.
+     */
     #[Route('/activeapi/enable', name: 'api_enable', methods: ['POST'])]
     public function enableApi(EntityManagerInterface $em)
     {
@@ -96,6 +116,11 @@ class SecurityController extends AbstractController
         $this->addFlash('success', 'Accès API activé.');
         return $this->redirectToRoute('orders_show');
     }
+
+    /**
+     * Désactivation de l’accès API : nécessite d’être connecté, désactive le flag,
+     * enregistre (flush), affiche un message et redirige.
+     */
     #[Route('/activeapi/disable', name: 'api_disable', methods: ['POST'])]
     public function disableApi(EntityManagerInterface $em)
     {

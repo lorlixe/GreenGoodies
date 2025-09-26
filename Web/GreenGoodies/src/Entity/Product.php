@@ -24,11 +24,11 @@ class Product
 
     #[Groups(['product'])]
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $short_description = null;
+    private ?string $shortDescription = null;
 
     #[Groups(['product'])]
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $long_description = null;
+    private ?string $fullDescription = null;
 
     #[Groups(['product'])]
     #[ORM\Column]
@@ -36,7 +36,7 @@ class Product
 
     #[Groups(['product'])]
     #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    private ?string $picture = null;
 
     /**
      * @var Collection<int, OrderProduct>
@@ -75,24 +75,24 @@ class Product
 
     public function getShortDescription(): ?string
     {
-        return $this->short_description;
+        return $this->shortDescription;
     }
 
-    public function setShortDescription(string $short_description): static
+    public function setShortDescription(string $shortDescription): static
     {
-        $this->short_description = $short_description;
+        $this->shortDescription = $shortDescription;
 
         return $this;
     }
 
     public function getLongDescription(): ?string
     {
-        return $this->long_description;
+        return $this->fullDescription;
     }
 
-    public function setLongDescription(string $long_description): static
+    public function setLongDescription(string $fullDescription): static
     {
-        $this->long_description = $long_description;
+        $this->fullDescription = $fullDescription;
 
         return $this;
     }
@@ -109,14 +109,14 @@ class Product
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getPicture(): ?string
     {
-        return $this->image;
+        return $this->picture;
     }
 
-    public function setImage(string $image): static
+    public function setPicture(string $picture): static
     {
-        $this->image = $image;
+        $this->picture = $picture;
 
         return $this;
     }

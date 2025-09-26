@@ -9,6 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    /**
+     * Page d’accueil : récupère et affiche jusqu’à 9 produits.
+     */
     #[Route('/', name: 'app_home')]
     public function index(ProductRepository $products): Response
     {

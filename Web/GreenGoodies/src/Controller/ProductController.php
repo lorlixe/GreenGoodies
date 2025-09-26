@@ -16,6 +16,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('product')]
 final class ProductController extends AbstractController
 {
+    /**
+     * afficher tous les produits
+     */
     #[Route(name: 'app_product', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
@@ -25,13 +28,16 @@ final class ProductController extends AbstractController
     }
 
 
+    /**
+     * Fiche produit : affiche le produit et la quantité déjà présente dans le panier.
+     */
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product, CartRepository $cartRepository): Response
     {
 
+        // quantité du produit dans panier 
         $cartItem = $cartRepository->findOneBy(['product_id' => $product]);
-
         $quantity = $cartItem?->getQuantity() ?? 0;
 
         return $this->render('product/show.html.twig', [

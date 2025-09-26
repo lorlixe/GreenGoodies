@@ -14,6 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/cart', name: 'app_cart_')]
 final class CartController extends AbstractController
 {
+
+    /**
+     * Affiche le panier de l’utilisateur connecté : récupère les lignes,
+     * calcule le sous-total et transmet les données au template.
+     * Accès réservé aux utilisateurs authentifiés.
+     */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(CartRepository $cartRepo): Response
     {
@@ -37,7 +43,7 @@ final class CartController extends AbstractController
                 continue;
             }
 
-            // la quantité et calcule le total de ligne
+            // la quantité et prix le total de la ligne
             $qty   = max(0, (int) $row->getQuantity());
             $unit  = (float) ($product->getPrice() ?? 0);
             $line  = $unit * $qty;
@@ -89,7 +95,7 @@ final class CartController extends AbstractController
             if ($qty == 0) {
                 $em->remove($line);
             } else {
-                $line->setQuantity($line->getQuantity() + $qty);
+                $line->setQuantity($qty);
             }
         } else {
             // Nouvelle ligne de panier

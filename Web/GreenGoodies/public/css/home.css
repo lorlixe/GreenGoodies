@@ -55,9 +55,9 @@
 .home-products > h2 {
     max-width: 1200px;
     margin: 0 auto 16px;
-    padding: 0 20px;
+    padding: 20px 20px;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--gg-text);
 }
 
@@ -71,7 +71,7 @@
     flex-direction: column;
     background: #fff;
     overflow: hidden;
-    height: 600px;
+    height: 550px;
 }
 
 .product-cover {
@@ -83,7 +83,7 @@
 }
 
 .product-meta {
-    padding: 12px 14px 14px;
+    padding: 30px 14px 14px;
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -127,7 +127,7 @@
 .product-link {
     font-size: 13px;
     color: var(--gg-text);
-    padding-top: 45px;
+    padding: 50px 0px 10px 0px;
 }
 
 /* vide */

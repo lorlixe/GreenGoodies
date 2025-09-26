@@ -41,8 +41,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $cgu_accepted = null;
 
-    #[ORM\Column]
-    private ?bool $api_active = null;
+    #[ORM\Column(nullable: true)]
+    private ?bool $api_active = false;
 
 
     /**

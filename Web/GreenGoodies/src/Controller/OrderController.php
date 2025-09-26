@@ -81,7 +81,7 @@ final class OrderController extends AbstractController
     }
 
     /**
-     * toutes les commandes).
+     * afficher toutes les commandes).
      */
     #[Route('/', name: 'show', methods: ['GET'])]
     public function show(OrderRepository $orderRepo): Response

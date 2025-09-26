@@ -8,12 +8,11 @@
 {% block body %}
 
 	<section class="home-products">
-		<h2>Nos produits</h2>
 		{% if products is defined and products|length > 0 %}
 			<div class="product-grid">
 				{% for p in products|slice(0, 9) %}
 					<article class="product-card">
-						<a class="product-cover" href="{{ path('app_product_show', { id: p.id }) }}" style="background-image:url('{{ asset(p.image) }}')"></a>
+						<a class="product-cover" href="{{ path('app_product_show', { id: p.id }) }}" style="background-image:url('{{ asset(p.picture) }}')"></a>
 						<div class="product-meta">
 							<h3 class="product-title">
 								<a href="">{{ p.name }}</a>

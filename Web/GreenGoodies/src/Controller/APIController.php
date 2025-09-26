@@ -13,6 +13,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class APIController extends AbstractController
 {
+    /**
+     * API: renvoie la liste des produits au format JSON.
+     */
     #[Route('/api/products', name: 'app_api', priority: 3)]
     public function index(ProductRepository $productRepo): JsonResponse
     {
@@ -20,7 +23,14 @@ final class APIController extends AbstractController
     }
 
 
-
+    /**
+     *accès API .
+     *
+     * Sécurité:
+     *   - Cette route est publique (PUBLIC_ACCESS) pour permettre l’obtention du token.
+     *   - Le reste des routes /api doit est protégé 
+     *   - L’accès API est conditionné par User::isApiActive().
+     */
     #[Route('/api/login', name: 'api_login', methods: ['POST'])]
     public function login(
         Request $request,
